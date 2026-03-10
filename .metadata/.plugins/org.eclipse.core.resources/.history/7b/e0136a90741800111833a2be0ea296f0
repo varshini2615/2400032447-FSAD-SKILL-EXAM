@@ -1,0 +1,33 @@
+package RestfulJPA.Controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.sun.tools.javac.util.List;
+
+import RestfulJPA.Model.Employee;
+import RestfulJPA.Repository.EmpRepository;
+
+@RestController
+@RequestMapping("/emp")
+public class EmpController {
+
+    @Autowired
+    EmpRepository empRepository;
+
+    @PostMapping("/save")
+    public ResponseEntity<String> addEmployee(@RequestBody Employee e) {
+        empRepository.save(e);
+        return ResponseEntity.ok("Record inserted successfully");
+    }
+
+    @GetMapping("/all")
+    public List getAllEmployees() {
+        return (List) empRepository.findAll();
+    }
+}
